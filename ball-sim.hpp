@@ -23,7 +23,6 @@ public:
 
     void draw(sf::RenderWindow &window) const;
     void update();
-    state getState() const;
 
 private:
     void updatePosition2d();

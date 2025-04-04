@@ -6,11 +6,6 @@ void ball::update()
     updatePosition2d();
 }
 
-state ball::getState() const
-{
-    return state_;
-}
-
 void ball::updatePosition2d()
 {
     state_.position.x += state_.velocity.vx * dt;
