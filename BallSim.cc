@@ -1,4 +1,4 @@
-#include "ball-sim.hpp"
+#include "BallSim.hpp"
 
 void ball::update()
 {
@@ -10,18 +10,6 @@ void ball::updatePosition2d()
 {
     state_.position.x += state_.velocity.vx * dt;
     state_.position.y += state_.velocity.vy * dt;
-
-    if (state_.position.y > 600.0f - radius_)
-    {
-        state_.hasReachedFloor = true;
-        state_.position.y = 600.0f - radius_;
-    }
-    else
-    {
-        state_.hasReachedFloor = false;
-    }
-
-    shape_.setPosition(state_.position.x, state_.position.y);
 }
 
 float ball::getRandomX()
@@ -34,15 +22,26 @@ float ball::getRandomX()
 
 void ball::updateVelocity2d()
 {
-    state_.velocity.vy = !state_.hasReachedFloor ? state_.velocity.vy + g * dt : bounce2d();
+    state_.velocity.vy = state_.velocity.vy + g * dt;
 }
 
-void ball::draw(sf::RenderWindow &window) const
+void ball::draw(sf::RenderWindow &window)
 {
+    shape_.setPosition(state_.position.x, state_.position.y);
     window.draw(shape_);
 }
 
 float ball::bounce2d()
 {
     return -e * state_.velocity.vy;
+}
+
+state &ball::getState()
+{
+    return state_;
+}
+
+const float ball::getRadius() const
+{
+    return radius_;
 }

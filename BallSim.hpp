@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <random>
@@ -11,7 +13,7 @@ constexpr float e = 0.8f;                 // elasticity [0, 1] where 0(no bounce
 class ball
 {
 public:
-    ball(const velocity2d &vel = velocity2d{0.0f, 0.0f})
+    ball(const velocity2d &vel = velocity2d{50.0f, 0.0f})
         : state_({getRandomX(), 0.0f}, vel)
     {
         shape_.setRadius(radius_);
@@ -21,7 +23,9 @@ public:
     }
 
     void update();
-    void draw(sf::RenderWindow &window) const;
+    void draw(sf::RenderWindow &window);
+    state &getState();
+    const float getRadius() const;
 
 private:
     void updatePosition2d();
@@ -30,6 +34,6 @@ private:
     static float getRandomX();
 
     state state_;
-    const float radius_{20.0f};
+    const float radius_{5.0f};
     sf::CircleShape shape_;
 };

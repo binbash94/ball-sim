@@ -1,11 +1,13 @@
 #include <SFML/Graphics.hpp>
-#include "ball-sim.hpp"
+#include "BallSim.hpp"
+#include "CollisionManager.hpp"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Bouncing Ball Sim");
     window.setFramerateLimit(60);
 
+    CollisionManager cm;
     std::vector<ball> particles;
 
     for (int i = 0; i < 10; i++)
@@ -27,6 +29,7 @@ int main()
         for (int j = 0; j < 10; j++)
         {
             particles[j].update();
+            cm.handleWallCollisions(particles[j]);
             particles[j].draw(window);
         }
 

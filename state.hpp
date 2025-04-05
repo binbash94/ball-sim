@@ -1,3 +1,5 @@
+#pragma once
+
 struct position2d
 {
     float x, y;
