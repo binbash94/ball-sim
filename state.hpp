@@ -2,6 +2,13 @@
 
 #include <cmath>
 
+struct acceleration2d
+{
+    float ax, ay;
+
+    acceleration2d(float ax = 0.0f, float ay = 9.81f * 100.0f) : ax{ax}, ay{ay} {};
+};
+
 struct position2d
 {
     float x, y;
@@ -33,8 +40,10 @@ struct state
 {
     position2d position;
     velocity2d velocity;
+    acceleration2d acceleration;
     bool hasReachedFloor{false};
+    uint8_t mass{10};
 
-    state(const position2d &p, const velocity2d &v)
-        : position(p), velocity(v) {}
+    state(const position2d &p, const velocity2d &v, const acceleration2d &a)
+        : position(p), velocity(v), acceleration{a} {}
 };

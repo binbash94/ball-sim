@@ -34,7 +34,7 @@ void CollisionManager::handleBallCollision(std::vector<ball> &particles)
         {
             if (hasCollided(particles[i], particles[j]))
             {
-                // resolveCollision()
+                resolveCollision(particles[i], particles[j]);
             }
         }
     }
@@ -42,11 +42,11 @@ void CollisionManager::handleBallCollision(std::vector<ball> &particles)
 
 bool CollisionManager::hasCollided(const ball &firstBallState, const ball &secondBallState)
 {
-    float xTerm = pow(secondBallState.getState().position.x, 2) - pow(firstBallState.getState().position.x, 2);
-    float yTerm = pow(secondBallState.getState().position.y, 2) - pow(firstBallState.getState().position.y, 2);
-    float particleDistance_px = sqrt(xTerm + yTerm);
+    float dx = secondBallState.getState().position.x - firstBallState.getState().position.x;
+    float dy = secondBallState.getState().position.y - firstBallState.getState().position.y;
+    mDistanceBetweenParticle = std::sqrt(dx * dx + dy * dy);
 
-    if (particleDistance_px < (firstBallState.getRadius() + secondBallState.getRadius()))
+    if (mDistanceBetweenParticle < (firstBallState.getRadius() + secondBallState.getRadius()))
     {
         return true;
     }
@@ -54,7 +54,23 @@ bool CollisionManager::hasCollided(const ball &firstBallState, const ball &secon
     return false;
 }
 
-void CollisionManager::resolveCollision(position2d &firstBallPos, position2d &secondBallPos)
+void CollisionManager::resolveCollision(ball &firstBallPos, ball &secondBallPos)
 {
-    position2d normal = (secondBallPos - firstBallPos).normalized();
+    position2d normal = (secondBallPos.getState().position - firstBallPos.getState().position).normalized();
+
+    float sigmaOverlap = firstBallPos.getRadius() + secondBallPos.getRadius() - mDistanceBetweenParticle;
+
+    if (sigmaOverlap > 0.0f) // Balls are overlapping
+    {
+
+        // Compute repulsive force magnitude
+        float forceMagnitude = 5.0f * sigmaOverlap; // k * overlap
+
+        // Apply forces to accelerations
+        firstBallPos.getState().acceleration.ax -= (forceMagnitude / firstBallPos.getState().mass) * normal.x;
+        firstBallPos.getState().acceleration.ay -= (forceMagnitude / firstBallPos.getState().mass) * normal.y;
+
+        secondBallPos.getState().acceleration.ax += (forceMagnitude / secondBallPos.getState().mass) * normal.x;
+        secondBallPos.getState().acceleration.ay += (forceMagnitude / secondBallPos.getState().mass) * normal.y;
+    }
 }

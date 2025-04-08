@@ -13,8 +13,8 @@ constexpr float e = 0.8f;                 // elasticity [0, 1] where 0(no bounce
 class ball
 {
 public:
-    ball(const velocity2d &vel = velocity2d{50.0f, 0.0f})
-        : state_({getRandomX(), 0.0f}, vel)
+    ball(const velocity2d &vel = velocity2d{10.0f, 0.0f})
+        : state_({getRandomX(), 0.0f}, vel, acceleration2d{})
     {
         shape_.setRadius(radius_);
         shape_.setFillColor(sf::Color::Red);
@@ -29,12 +29,13 @@ public:
     const float getRadius() const;
 
 private:
+    void updateAccel2d();
     void updatePosition2d();
     void updateVelocity2d();
     float bounce2d();
     static float getRandomX();
 
     state state_;
-    const float radius_{20.0f};
+    const float radius_{10.0f};
     sf::CircleShape shape_;
 };

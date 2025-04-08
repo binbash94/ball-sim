@@ -2,6 +2,7 @@
 
 void ball::update()
 {
+    updateAccel2d();
     updateVelocity2d();
     updatePosition2d();
 }
@@ -22,7 +23,16 @@ float ball::getRandomX()
 
 void ball::updateVelocity2d()
 {
-    state_.velocity.vy = state_.velocity.vy + g * dt;
+    state_.velocity.vy = state_.velocity.vy + state_.acceleration.ay * dt;
+    state_.velocity.vx = state_.velocity.vx + state_.acceleration.ax * dt;
+}
+
+void ball::updateAccel2d()
+{
+    state_.acceleration.ax = 0.0f;
+    state_.acceleration.ay = 0.0f;
+
+    state_.acceleration.ay += g;
 }
 
 void ball::draw(sf::RenderWindow &window)

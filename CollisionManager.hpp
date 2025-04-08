@@ -19,5 +19,7 @@ public:
 
 private:
     bool hasCollided(const ball &firstBallState, const ball &secondBallState);
-    void resolveCollision(position2d &firstBallPos, position2d &secondBallPos);
+    void resolveCollision(ball &firstBallPos, ball &secondBallPos);
+
+    float mDistanceBetweenParticle{0.0f};
 };
