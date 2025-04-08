@@ -19,5 +19,5 @@ public:
 
 private:
     bool hasCollided(const ball &firstBallState, const ball &secondBallState);
-    void resolveCollision(ball &firstBallState, ball &secondBallState);
+    void resolveCollision(position2d &firstBallPos, position2d &secondBallPos);
 };

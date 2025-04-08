@@ -53,3 +53,8 @@ bool CollisionManager::hasCollided(const ball &firstBallState, const ball &secon
 
     return false;
 }
+
+void CollisionManager::resolveCollision(position2d &firstBallPos, position2d &secondBallPos)
+{
+    position2d normal = (secondBallPos - firstBallPos).normalized();
+}
