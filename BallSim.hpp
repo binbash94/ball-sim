@@ -25,6 +25,7 @@ public:
     void update();
     void draw(sf::RenderWindow &window);
     state &getState();
+    const state &getState() const;
     const float getRadius() const;
 
 private:
@@ -34,6 +35,6 @@ private:
     static float getRandomX();
 
     state state_;
-    const float radius_{5.0f};
+    const float radius_{20.0f};
     sf::CircleShape shape_;
 };

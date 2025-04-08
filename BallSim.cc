@@ -45,3 +45,8 @@ const float ball::getRadius() const
 {
     return radius_;
 }
+
+const state &ball::getState() const
+{
+    return state_;
+}

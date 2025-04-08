@@ -1,6 +1,9 @@
 #pragma once
 
+#include <cmath>
+
 #include "BallSim.hpp"
+#include "state.hpp"
 
 class CollisionManager
 {
@@ -12,7 +15,9 @@ public:
     static constexpr float RESTITUTION = 1.0f;
 
     void handleWallCollisions(ball &particleState);
-    void handleBallCollision(ball &particleState);
+    void handleBallCollision(std::vector<ball> &particles);
 
 private:
+    bool hasCollided(const ball &firstBallState, const ball &secondBallState);
+    void resolveCollision(ball &firstBallState, ball &secondBallState);
 };

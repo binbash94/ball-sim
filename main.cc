@@ -30,6 +30,12 @@ int main()
         {
             particles[j].update();
             cm.handleWallCollisions(particles[j]);
+        }
+
+        cm.handleBallCollision(particles);
+
+        for (int j = 0; j < 10; j++)
+        {
             particles[j].draw(window);
         }
 
