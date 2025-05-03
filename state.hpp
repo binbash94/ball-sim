@@ -44,6 +44,6 @@ struct state
     bool hasReachedFloor{false};
     uint8_t mass{10};
 
-    state(const position2d &p, const velocity2d &v, const acceleration2d &a)
-        : position(p), velocity(v), acceleration{a} {}
+    state(const position2d &p, const velocity2d &v, const acceleration2d &a, uint8_t m = 10)
+        : position(p), velocity(v), acceleration{a}, mass(m) {}
 };

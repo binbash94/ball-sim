@@ -10,7 +10,7 @@ int main()
     CollisionManager cm;
     std::vector<ball> particles;
 
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 1000; i++)
     {
         particles.push_back(ball{});
     }
@@ -24,17 +24,26 @@ int main()
                 window.close();
         }
 
-        window.clear(sf::Color::White);
+        window.clear(sf::Color::Black);
 
+        // Apply base forces (gravity)
+        for (ball &b : particles)
+        {
+            b.updateAccel2d();
+        } // only gravity, no reset after collision
+
+        // Detect and resolve collisions — now this affects velocity properly
         cm.handleBallCollision(particles);
 
-        for (int j = 0; j < 10; j++)
+        // Apply velocity and update position
+        for (ball &b : particles)
         {
-            particles[j].update();
-            cm.handleWallCollisions(particles[j]);
+            b.updateVelocity2d();
+            b.updatePosition2d();
+            cm.handleWallCollisions(b);
         }
 
-        for (int j = 0; j < 10; j++)
+        for (int j = 0; j < 1000; j++)
         {
             particles[j].draw(window);
         }
